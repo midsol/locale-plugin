@@ -129,6 +129,13 @@ public final class EditActivity extends AbstractFragmentPluginAppCompatActivity 
     }
 
     private boolean equalBundles(Bundle one, Bundle two) {
+        if (one == null) {
+            return two == null;
+        }
+        if (two == null) {
+            return false;
+        }
+
         if(one.size() != two.size())
             return false;
 
