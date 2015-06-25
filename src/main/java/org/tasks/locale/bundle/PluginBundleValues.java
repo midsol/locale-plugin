@@ -12,6 +12,7 @@ public final class PluginBundleValues {
 
     public static final String BUNDLE_EXTRA_STRING_TITLE = "org.tasks.locale.STRING_TITLE";
     public static final String BUNDLE_EXTRA_STRING_QUERY = "org.tasks.locale.STRING_QUERY";
+    public static final String BUNDLE_EXTRA_PREVIOUS_BUNDLE = "org.tasks.locale.PREVIOUS_BUNDLE";
     public static final String BUNDLE_EXTRA_INT_VERSION_CODE = "org.tasks.locale.INT_VERSION_CODE";
 
     public static boolean isBundleValid(final Bundle bundle) {

@@ -9,6 +9,12 @@
 
     <style name="Tasks" parent="AppThemeBase"/>
 
+    <style name="TasksDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/primary</item>
+    </style>
+
     <style name="ActionBarThemeOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="android:textColorPrimary">#fff</item>
         <item name="colorControlNormal">#fff</item>

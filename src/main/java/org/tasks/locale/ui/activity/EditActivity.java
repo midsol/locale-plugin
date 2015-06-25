@@ -6,14 +6,18 @@ import org.tasks.locale.R;
 import org.tasks.locale.bundle.PluginBundleValues;
 
 import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+
+import java.util.Set;
 
 public final class EditActivity extends AbstractFragmentPluginAppCompatActivity {
 
@@ -21,6 +25,7 @@ public final class EditActivity extends AbstractFragmentPluginAppCompatActivity 
 
     private static final int REQUEST_SELECT_FILTER = 10124;
 
+    private Bundle previousBundle;
     private String title;
     private String query;
 
@@ -31,6 +36,7 @@ public final class EditActivity extends AbstractFragmentPluginAppCompatActivity 
         setContentView(R.layout.main);
 
         if (savedInstanceState != null) {
+            previousBundle = savedInstanceState.getParcelable(PluginBundleValues.BUNDLE_EXTRA_PREVIOUS_BUNDLE);
             title = savedInstanceState.getString(PluginBundleValues.BUNDLE_EXTRA_STRING_TITLE);
             query = savedInstanceState.getString(PluginBundleValues.BUNDLE_EXTRA_STRING_QUERY);
             updateActivity();
@@ -45,7 +51,7 @@ public final class EditActivity extends AbstractFragmentPluginAppCompatActivity 
             supportActionBar.setTitle(R.string.app_name);
         }
 
-        findViewById(R.id.text_view).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.filter_selection).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivityForResult(new Intent() {{
@@ -57,6 +63,7 @@ public final class EditActivity extends AbstractFragmentPluginAppCompatActivity 
 
     @Override
     public void onPostCreateWithPreviousResult(final Bundle previousBundle, final String previousBlurb) {
+        this.previousBundle = previousBundle;
         title = PluginBundleValues.getTitle(previousBundle);
         query = PluginBundleValues.getQuery(previousBundle);
         updateActivity();
@@ -90,12 +97,60 @@ public final class EditActivity extends AbstractFragmentPluginAppCompatActivity 
                 finish();
                 break;
             case android.R.id.home:
-                mIsCancelled = true;
-                finish();
+                if (equalBundles(getResultBundle(), previousBundle)) {
+                    cancel();
+                } else {
+                    new AlertDialog.Builder(this, R.style.TasksDialog)
+                            .setMessage(R.string.discard_changes)
+                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    cancel();
+                                }
+                            })
+                            .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            })
+                            .show();
+                }
                 break;
             default:
                 return super.onOptionsItemSelected(item);
         }
+        return true;
+    }
+
+    private void cancel() {
+        mIsCancelled = true;
+        finish();
+    }
+
+    private boolean equalBundles(Bundle one, Bundle two) {
+        if(one.size() != two.size())
+            return false;
+
+        Set<String> setOne = one.keySet();
+        Object valueOne;
+        Object valueTwo;
+
+        for(String key : setOne) {
+            valueOne = one.get(key);
+            valueTwo = two.get(key);
+            if(valueOne instanceof Bundle && valueTwo instanceof Bundle &&
+                    !equalBundles((Bundle) valueOne, (Bundle) valueTwo)) {
+                return false;
+            }
+            else if(valueOne == null) {
+                if(valueTwo != null || !two.containsKey(key))
+                    return false;
+            }
+            else if(!valueOne.equals(valueTwo))
+                return false;
+        }
+
         return true;
     }
 
@@ -116,6 +171,7 @@ public final class EditActivity extends AbstractFragmentPluginAppCompatActivity 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        outState.putParcelable(PluginBundleValues.BUNDLE_EXTRA_PREVIOUS_BUNDLE, previousBundle);
         outState.putString(PluginBundleValues.BUNDLE_EXTRA_STRING_TITLE, title);
         outState.putString(PluginBundleValues.BUNDLE_EXTRA_STRING_QUERY, query);
     }

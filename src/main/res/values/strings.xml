@@ -10,5 +10,7 @@
     <!-- Hint text in the toast edit text -->
     <string name="save">Save</string>
     <string name="select_filter">Select Filter</string>
+    <string name="filter">Filter</string>
+    <string name="discard_changes">Discard changes?</string>
 
 </resources>
