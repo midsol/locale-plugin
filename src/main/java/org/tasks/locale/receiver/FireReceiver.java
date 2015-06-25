@@ -19,8 +19,8 @@ public final class FireReceiver extends BroadcastReceiver {
     }
 
     protected void firePluginSetting(final Context context, final Bundle bundle) {
-        context.startService(new Intent() {{
-            setComponent(new ComponentName("org.tasks", "org.tasks.service.ListNotificationIntentService"));
+        context.sendBroadcast(new Intent() {{
+            setComponent(new ComponentName("org.tasks", "org.tasks.receivers.ListNotificationReceiver"));
             putExtra("extra_filter_title", PluginBundleValues.getTitle(bundle));
             putExtra("extra_filter_query", PluginBundleValues.getQuery(bundle));
         }});
