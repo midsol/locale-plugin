@@ -55,6 +55,8 @@ android {
             testCoverageEnabled true
         }
         release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard.txt'
             signingConfig signingConfigs.release
         }
     }
