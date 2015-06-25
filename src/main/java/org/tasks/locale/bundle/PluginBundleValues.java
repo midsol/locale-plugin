@@ -1,6 +1,5 @@
 package org.tasks.locale.bundle;
 
-import android.content.Context;
 import android.os.Bundle;
 
 import org.slf4j.Logger;
@@ -11,44 +10,49 @@ public final class PluginBundleValues {
 
     private static final Logger log = LoggerFactory.getLogger(PluginBundleValues.class);
 
-    public static final String BUNDLE_EXTRA_STRING_MESSAGE
-            = "com.twofortyfouram.locale.example.setting.toast.extra.STRING_MESSAGE"; //$NON-NLS-1$
-
-    public static final String BUNDLE_EXTRA_INT_VERSION_CODE
-            = "com.twofortyfouram.locale.example.setting.toast.extra.INT_VERSION_CODE"; //$NON-NLS-1$
+    public static final String BUNDLE_EXTRA_STRING_TITLE = "org.tasks.locale.STRING_TITLE";
+    public static final String BUNDLE_EXTRA_STRING_QUERY = "org.tasks.locale.STRING_QUERY";
+    public static final String BUNDLE_EXTRA_INT_VERSION_CODE = "org.tasks.locale.INT_VERSION_CODE";
 
     public static boolean isBundleValid(final Bundle bundle) {
         if (null == bundle) {
+            log.error("bundle is null");
             return false;
         }
 
-        try {
-            String message = bundle.getString(BUNDLE_EXTRA_STRING_MESSAGE);
-            if (message == null || message.trim().length() == 0) {
-                return false;
-            }
-            Integer version = bundle.getInt(BUNDLE_EXTRA_INT_VERSION_CODE, -1);
-            if (version == -1) {
-                return false;
-            }
-        } catch (final AssertionError e) {
-            log.error("Bundle failed verification%s", e); //$NON-NLS-1$
+        String title = bundle.getString(BUNDLE_EXTRA_STRING_TITLE);
+        if (title == null || title.trim().length() == 0) {
+            log.error("invalid title: {}", title);
+            return false;
+        }
+        String query = bundle.getString(BUNDLE_EXTRA_STRING_QUERY);
+        if (query == null || query.trim().length() == 0) {
+            log.error("invalid query: {}", query);
+            return false;
+        }
+        Integer version = bundle.getInt(BUNDLE_EXTRA_INT_VERSION_CODE, -1);
+        if (version == -1) {
+            log.error("invalid version code: {}", version);
             return false;
         }
 
         return true;
     }
 
-    public static Bundle generateBundle(final Context context, final String message) {
-        final Bundle result = new Bundle();
+    public static Bundle generateBundle(String title, String query) {
+        Bundle result = new Bundle();
         result.putInt(BUNDLE_EXTRA_INT_VERSION_CODE, BuildConfig.VERSION_CODE);
-        result.putString(BUNDLE_EXTRA_STRING_MESSAGE, message);
-
+        result.putString(BUNDLE_EXTRA_STRING_TITLE, title);
+        result.putString(BUNDLE_EXTRA_STRING_QUERY, query);
         return result;
     }
 
-    public static String getMessage(final Bundle bundle) {
-        return bundle.getString(BUNDLE_EXTRA_STRING_MESSAGE);
+    public static String getTitle(Bundle bundle) {
+        return bundle.getString(BUNDLE_EXTRA_STRING_TITLE);
+    }
+
+    public static String getQuery(Bundle bundle) {
+        return bundle.getString(BUNDLE_EXTRA_STRING_QUERY);
     }
 
     private PluginBundleValues() {

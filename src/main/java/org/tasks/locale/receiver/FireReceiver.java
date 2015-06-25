@@ -9,7 +9,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
 public final class FireReceiver extends BroadcastReceiver {
 
@@ -20,7 +19,11 @@ public final class FireReceiver extends BroadcastReceiver {
     }
 
     protected void firePluginSetting(final Context context, final Bundle bundle) {
-        Toast.makeText(context, PluginBundleValues.getMessage(bundle), Toast.LENGTH_LONG).show();
+        context.startService(new Intent() {{
+            setComponent(new ComponentName("org.tasks", "org.tasks.service.ListNotificationIntentService"));
+            putExtra("extra_filter_title", PluginBundleValues.getTitle(bundle));
+            putExtra("extra_filter_query", PluginBundleValues.getQuery(bundle));
+        }});
     }
 
     @Override
@@ -34,7 +37,6 @@ public final class FireReceiver extends BroadcastReceiver {
          */
 
         if (!com.twofortyfouram.locale.api.Intent.ACTION_FIRE_SETTING.equals(intent.getAction())) {
-
             log.error("Intent action is not {}", com.twofortyfouram.locale.api.Intent.ACTION_FIRE_SETTING); //$NON-NLS-1$
             return;
         }

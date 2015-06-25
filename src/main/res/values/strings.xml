@@ -8,7 +8,7 @@
     <string name="plugin_name">Tasks</string>
 
     <!-- Hint text in the toast edit text -->
-    <string name="message_hint">Scheduled Toast</string>
     <string name="save">Save</string>
+    <string name="select_filter">Select Filter</string>
 
 </resources>

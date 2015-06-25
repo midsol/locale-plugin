@@ -21,12 +21,28 @@ public final class FireReceiverTest extends AndroidTestCase {
      */
 
     @SmallTest
-    public void testNullMessage() {
+    public void testNullTitle() {
         final FireReceiver fireReceiver = new FireReceiver();
 
         final Bundle bundle = PluginBundleValues
-                .generateBundle(getContext(), "test_message"); //$NON-NLS-1$
-        bundle.putString(PluginBundleValues.BUNDLE_EXTRA_STRING_MESSAGE, null);
+                .generateBundle("test_title", "test_query"); //$NON-NLS-1$
+        bundle.putString(PluginBundleValues.BUNDLE_EXTRA_STRING_TITLE, null);
+
+        /*
+         * The receiver shouldn't crash if the EXTRA_BUNDLE is incorrect
+         */
+        fireReceiver.onReceive(getContext(), new Intent(
+                com.twofortyfouram.locale.api.Intent.ACTION_FIRE_SETTING).putExtra(
+                com.twofortyfouram.locale.api.Intent.EXTRA_BUNDLE, bundle));
+    }
+
+    @SmallTest
+    public void testNullQuery() {
+        final FireReceiver fireReceiver = new FireReceiver();
+
+        final Bundle bundle = PluginBundleValues
+                .generateBundle("test_title", "test_query"); //$NON-NLS-1$
+        bundle.putString(PluginBundleValues.BUNDLE_EXTRA_STRING_QUERY, null);
 
         /*
          * The receiver shouldn't crash if the EXTRA_BUNDLE is incorrect
@@ -41,7 +57,7 @@ public final class FireReceiverTest extends AndroidTestCase {
         final FireReceiver fireReceiver = new FireReceiver();
 
         final Bundle bundle = PluginBundleValues
-                .generateBundle(getContext(), "test_message"); //$NON-NLS-1$
+                .generateBundle("test_title", "test_query"); //$NON-NLS-1$
 
         fireReceiver.onReceive(getContext(), new Intent(
                 com.twofortyfouram.locale.api.Intent.ACTION_FIRE_SETTING).putExtra(

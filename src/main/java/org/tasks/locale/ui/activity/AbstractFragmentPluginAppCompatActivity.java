@@ -54,26 +54,16 @@ public abstract class AbstractFragmentPluginAppCompatActivity extends AppCompatA
                 final Bundle resultBundle = getResultBundle();
 
                 if (null != resultBundle) {
-                    final String blurb = getResultBlurb(resultBundle);
-
-                    if (!blurb.equals(getPreviousBlurb())) {
-                        final Intent resultIntent = new Intent();
-                        resultIntent.putExtra(com.twofortyfouram.locale.api.Intent.EXTRA_BUNDLE,
-                                resultBundle);
-                        resultIntent.putExtra(
-                                com.twofortyfouram.locale.api.Intent.EXTRA_STRING_BLURB,
-                                blurb);
-
-                        setResult(RESULT_OK, resultIntent);
-                    }
+                    String blurb = getResultBlurb(resultBundle);
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra(com.twofortyfouram.locale.api.Intent.EXTRA_BUNDLE,
+                            resultBundle);
+                    resultIntent.putExtra(com.twofortyfouram.locale.api.Intent.EXTRA_STRING_BLURB,
+                            blurb);
+                    setResult(RESULT_OK, resultIntent);
                 }
             }
         }
-
-        /*
-         * Super call must come after the Activity result is set. If it comes
-         * first, then the Activity result will be lost.
-         */
         super.finish();
     }
 
