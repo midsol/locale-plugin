@@ -23,6 +23,10 @@ public final class FireReceiver extends BroadcastReceiver {
             setComponent(new ComponentName("org.tasks", "org.tasks.receivers.ListNotificationReceiver"));
             putExtra("extra_filter_title", PluginBundleValues.getTitle(bundle));
             putExtra("extra_filter_query", PluginBundleValues.getQuery(bundle));
+            String valuesForNewTasks = PluginBundleValues.getValuesForNewTasks(bundle);
+            if (valuesForNewTasks != null) {
+                putExtra("extra_filter_values", valuesForNewTasks);
+            }
         }});
     }
 

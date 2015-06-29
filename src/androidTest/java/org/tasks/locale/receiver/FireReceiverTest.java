@@ -25,7 +25,7 @@ public final class FireReceiverTest extends AndroidTestCase {
         final FireReceiver fireReceiver = new FireReceiver();
 
         final Bundle bundle = PluginBundleValues
-                .generateBundle("test_title", "test_query"); //$NON-NLS-1$
+                .generateBundle("test_title", "test_query", "test_values"); //$NON-NLS-1$
         bundle.putString(PluginBundleValues.BUNDLE_EXTRA_STRING_TITLE, null);
 
         /*
@@ -41,7 +41,7 @@ public final class FireReceiverTest extends AndroidTestCase {
         final FireReceiver fireReceiver = new FireReceiver();
 
         final Bundle bundle = PluginBundleValues
-                .generateBundle("test_title", "test_query"); //$NON-NLS-1$
+                .generateBundle("test_title", "test_query", "test_values"); //$NON-NLS-1$
         bundle.putString(PluginBundleValues.BUNDLE_EXTRA_STRING_QUERY, null);
 
         /*
@@ -57,7 +57,7 @@ public final class FireReceiverTest extends AndroidTestCase {
         final FireReceiver fireReceiver = new FireReceiver();
 
         final Bundle bundle = PluginBundleValues
-                .generateBundle("test_title", "test_query"); //$NON-NLS-1$
+                .generateBundle("test_title", "test_query", "test_values"); //$NON-NLS-1$
 
         fireReceiver.onReceive(getContext(), new Intent(
                 com.twofortyfouram.locale.api.Intent.ACTION_FIRE_SETTING).putExtra(

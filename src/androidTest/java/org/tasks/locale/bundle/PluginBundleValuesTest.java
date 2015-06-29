@@ -20,13 +20,14 @@ public final class PluginBundleValuesTest extends AndroidTestCase {
 
     @SmallTest
     public void testGenerateBundle() {
-        final Bundle bundle = PluginBundleValues.generateBundle("Foo", "Bar");
+        final Bundle bundle = PluginBundleValues.generateBundle("Foo", "Bar", "Baz");
         assertNotNull(bundle);
 
-        assertEquals(3, bundle.keySet().size());
+        assertEquals(4, bundle.keySet().size());
 
         assertEquals("Foo", bundle.getString(PluginBundleValues.BUNDLE_EXTRA_STRING_TITLE));
         assertEquals("Bar", bundle.getString(PluginBundleValues.BUNDLE_EXTRA_STRING_QUERY));
+        assertEquals("Baz", bundle.getString(PluginBundleValues.BUNDLE_EXTRA_STRING_VALUES));
         assertEquals(BuildConfig.VERSION_CODE, bundle.getInt(PluginBundleValues.BUNDLE_EXTRA_INT_VERSION_CODE));
     }
 

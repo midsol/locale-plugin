@@ -28,6 +28,7 @@ public final class EditActivity extends AbstractFragmentPluginAppCompatActivity 
     private Bundle previousBundle;
     private String title;
     private String query;
+    private String values;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -39,6 +40,7 @@ public final class EditActivity extends AbstractFragmentPluginAppCompatActivity 
             previousBundle = savedInstanceState.getParcelable(PluginBundleValues.BUNDLE_EXTRA_PREVIOUS_BUNDLE);
             title = savedInstanceState.getString(PluginBundleValues.BUNDLE_EXTRA_STRING_TITLE);
             query = savedInstanceState.getString(PluginBundleValues.BUNDLE_EXTRA_STRING_QUERY);
+            values = savedInstanceState.getString(PluginBundleValues.BUNDLE_EXTRA_STRING_VALUES);
             updateActivity();
         }
 
@@ -76,7 +78,7 @@ public final class EditActivity extends AbstractFragmentPluginAppCompatActivity 
 
     @Override
     public Bundle getResultBundle() {
-        return PluginBundleValues.generateBundle(title, query);
+        return PluginBundleValues.generateBundle(title, query, values);
     }
 
     @Override
@@ -167,6 +169,7 @@ public final class EditActivity extends AbstractFragmentPluginAppCompatActivity 
             if (resultCode == RESULT_OK) {
                 title = data.getStringExtra("extra_filter_name");
                 query = data.getStringExtra("extra_filter_query");
+                values = data.getStringExtra("extra_filter_values");
                 updateActivity();
             }
 
@@ -181,6 +184,7 @@ public final class EditActivity extends AbstractFragmentPluginAppCompatActivity 
         outState.putParcelable(PluginBundleValues.BUNDLE_EXTRA_PREVIOUS_BUNDLE, previousBundle);
         outState.putString(PluginBundleValues.BUNDLE_EXTRA_STRING_TITLE, title);
         outState.putString(PluginBundleValues.BUNDLE_EXTRA_STRING_QUERY, query);
+        outState.putString(PluginBundleValues.BUNDLE_EXTRA_STRING_VALUES, values);
     }
 
     private void updateActivity() {
