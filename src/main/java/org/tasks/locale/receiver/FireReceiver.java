@@ -10,6 +10,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.todoroo.astrid.service;
+
 public final class FireReceiver extends BroadcastReceiver {
 
     private static final Logger log = LoggerFactory.getLogger(FireReceiver.class);
@@ -19,15 +21,8 @@ public final class FireReceiver extends BroadcastReceiver {
     }
 
     protected void firePluginSetting(final Context context, final Bundle bundle) {
-        context.sendBroadcast(new Intent() {{
-            setComponent(new ComponentName("org.tasks", "org.tasks.receivers.ListNotificationReceiver"));
-            putExtra("extra_filter_title", PluginBundleValues.getTitle(bundle));
-            putExtra("extra_filter_query", PluginBundleValues.getQuery(bundle));
-            String valuesForNewTasks = PluginBundleValues.getValuesForNewTasks(bundle);
-            if (valuesForNewTasks != null) {
-                putExtra("extra_filter_values", valuesForNewTasks);
-            }
-        }});
+        String sTitle = PluginBundleValues.getTitle(bundle));
+        TaskCreator.basicQuickAddTask(sTitle);
     }
 
     @Override
