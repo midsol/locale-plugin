@@ -29,6 +29,9 @@ public final class EditActivity extends AbstractFragmentPluginAppCompatActivity 
     private String title;
     private String query;
     private String values;
+    
+    private TextBox tBox1 = null;
+    private Button Btn1 = null;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -37,37 +40,44 @@ public final class EditActivity extends AbstractFragmentPluginAppCompatActivity 
         setContentView(R.layout.main);
 
         if (savedInstanceState != null) {
-            previousBundle = savedInstanceState.getParcelable(PluginBundleValues.BUNDLE_EXTRA_PREVIOUS_BUNDLE);
-            title = savedInstanceState.getString(PluginBundleValues.BUNDLE_EXTRA_STRING_TITLE);
-            query = savedInstanceState.getString(PluginBundleValues.BUNDLE_EXTRA_STRING_QUERY);
-            values = savedInstanceState.getString(PluginBundleValues.BUNDLE_EXTRA_STRING_VALUES);
-            updateActivity();
+            
         }
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        ActionBar supportActionBar = getSupportActionBar();
-        if (supportActionBar != null) {
-            supportActionBar.setDisplayHomeAsUpEnabled(true);
-            supportActionBar.setHomeAsUpIndicator(R.drawable.ic_close_white_24dp);
-            supportActionBar.setTitle(R.string.app_name);
-        }
+        EditText tBox1 = (EditText)findViewById(R.id.name);
+        title =  tBox1.getText().toString();
+        
+        Btn1 = (Button) findViewById(R.id.Btn1);
+        Btn1.setText("Save");
+        Btn1.setOnClickListener( new OnClickListener() {
 
-        findViewById(R.id.filter_selection).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivityForResult(new Intent() {{
-                    setComponent(new ComponentName("org.tasks", "org.tasks.activities.FilterSelectionActivity"));
-                }}, REQUEST_SELECT_FILTER);
-            }
-        });
+                @Override
+                public void onClick(View v) {
+                    // TODO Auto-generated method stub
+                    finish();
+                }
+            });
+        
+        updateActivity();
+        );
     }
 
     @Override
     public void onPostCreateWithPreviousResult(final Bundle previousBundle, final String previousBlurb) {
         this.previousBundle = previousBundle;
         title = PluginBundleValues.getTitle(previousBundle);
-        query = PluginBundleValues.getQuery(previousBundle);
+        tBox1.setText(title);
+        
+        Btn1 = (Button) findViewById(R.id.Btn1);
+        Btn1.setText("Save");
+        Btn1.setOnClickListener( new OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    // TODO Auto-generated method stub
+                    finish();
+                }
+            });
+        
         updateActivity();
     }
 
