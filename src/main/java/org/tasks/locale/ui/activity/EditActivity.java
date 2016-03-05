@@ -41,41 +41,50 @@ public final class EditActivity extends AbstractFragmentPluginAppCompatActivity 
     private Button Btn1 = null;
 
     @Override
-    protected void onCreate(final Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) 
+    {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.main);
-
-        if (savedInstanceState != null) {
-            
-        }
 
         EditText tBox1 = (EditText)findViewById(R.id.tBox1);
         stitle =  tBox1.getText().toString();
         
         Btn1 = (Button) findViewById(R.id.Btn1);
         Btn1.setText("Save");
-        Btn1.setOnClickListener( new OnClickListener() {
 
-                @Override
-                public void onClick(View v) 
+        if (savedInstanceState != null)
+        {
+            previousBundle = savedInstanceState.getParcelable(PluginBundleValues.BUNDLE_EXTRA_PREVIOUS_BUNDLE);
+            title = savedInstanceState.getString(PluginBundleValues.BUNDLE_EXTRA_STRING_TITLE);
+            query = savedInstanceState.getString(PluginBundleValues.BUNDLE_EXTRA_STRING_QUERY);
+            values = savedInstanceState.getString(PluginBundleValues.BUNDLE_EXTRA_STRING_VALUES);
+            tBox1.setText(values);
+        }
+
+        Btn1.setOnClickListener( new OnClickListener()
+        {
+            @Override
+            public void onClick(View v) 
+            {
+                if (stitle != null)
                 {
-                            if (stitle != null)
-                            {
-                                putExtra("extra_filter_values", AndroidUtilities.contentValuesToSerializedString(stitle));
-                                values = stitle;
-                            }
-                    finish();
+                    putExtra("extra_filter_values", AndroidUtilities.contentValuesToSerializedString(stitle));
+                    values = stitle;
                 }
-            });
+            finish();
+            }
+        });
         
         updateActivity();
-        );
     }
 
     @Override
-    public void onPostCreateWithPreviousResult(final Bundle previousBundle, final String previousBlurb) {
+    public void onPostCreateWithPreviousResult(final Bundle previousBundle, final String previousBlurb)
+    {
         this.previousBundle = previousBundle;
+        query = PluginBundleValues.getQuery(previousBundle);
+
         stitle = PluginBundleValues.getTitle(previousBundle);
         tBox1.setText(stitle);
         
