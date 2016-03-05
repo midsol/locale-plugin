@@ -34,6 +34,8 @@ public final class EditActivity extends AbstractFragmentPluginAppCompatActivity 
     private String stitle;
     private String query;
     private String values;
+    private String title;
+
     
     private TextBox tBox1 = null;
     private Button Btn1 = null;
