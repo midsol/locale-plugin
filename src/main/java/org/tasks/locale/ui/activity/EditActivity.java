@@ -1,9 +1,14 @@
 package org.tasks.locale.ui.activity;
 
+import com.todoroo.astrid.adapter.FilterAdapter;
+import com.todoroo.astrid.api.Filter;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tasks.locale.R;
 import org.tasks.locale.bundle.PluginBundleValues;
+import org.tasks.filters.FilterCounter;
+import org.tasks.filters.FilterProvider;
 
 import android.content.ComponentName;
 import android.content.DialogInterface;
@@ -26,7 +31,7 @@ public final class EditActivity extends AbstractFragmentPluginAppCompatActivity 
     private static final int REQUEST_SELECT_FILTER = 10124;
 
     private Bundle previousBundle;
-    private String title;
+    private String stitle;
     private String query;
     private String values;
     
@@ -43,16 +48,21 @@ public final class EditActivity extends AbstractFragmentPluginAppCompatActivity 
             
         }
 
-        EditText tBox1 = (EditText)findViewById(R.id.name);
-        title =  tBox1.getText().toString();
+        EditText tBox1 = (EditText)findViewById(R.id.tBox1);
+        stitle =  tBox1.getText().toString();
         
         Btn1 = (Button) findViewById(R.id.Btn1);
         Btn1.setText("Save");
         Btn1.setOnClickListener( new OnClickListener() {
 
                 @Override
-                public void onClick(View v) {
-                    // TODO Auto-generated method stub
+                public void onClick(View v) 
+                {
+                            if (stitle != null)
+                            {
+                                putExtra("extra_filter_values", AndroidUtilities.contentValuesToSerializedString(stitle));
+                                values = stitle;
+                            }
                     finish();
                 }
             });
@@ -64,16 +74,21 @@ public final class EditActivity extends AbstractFragmentPluginAppCompatActivity 
     @Override
     public void onPostCreateWithPreviousResult(final Bundle previousBundle, final String previousBlurb) {
         this.previousBundle = previousBundle;
-        title = PluginBundleValues.getTitle(previousBundle);
-        tBox1.setText(title);
+        stitle = PluginBundleValues.getTitle(previousBundle);
+        tBox1.setText(stitle);
         
         Btn1 = (Button) findViewById(R.id.Btn1);
         Btn1.setText("Save");
         Btn1.setOnClickListener( new OnClickListener() {
 
                 @Override
-                public void onClick(View v) {
-                    // TODO Auto-generated method stub
+                public void onClick(View v)
+                {
+                    if (title != null)
+                    {
+                        putExtra("extra_filter_values", AndroidUtilities.contentValuesToSerializedString(stitle));
+                        values = stitle;
+                    }
                     finish();
                 }
             });
